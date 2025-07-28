@@ -4,6 +4,7 @@ using GestionParkingExamen.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionParkingExamen.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250728150142_mssql.onprem_migration_985")]
+    partial class mssqlonprem_migration_985
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,25 +27,25 @@ namespace GestionParkingExamen.Migrations
 
             modelBuilder.Entity("GestionParkingExamen.Models.Reservas", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("IdReserva")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdReserva"));
 
-                    b.Property<string>("UsuarioId")
+                    b.Property<DateTime>("FechFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechIni")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IdUsuario")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("fechFin")
-                        .HasColumnType("datetime2");
+                    b.HasKey("IdReserva");
 
-                    b.Property<DateTime>("fechIni")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Reservas");
                 });
@@ -253,7 +256,7 @@ namespace GestionParkingExamen.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
