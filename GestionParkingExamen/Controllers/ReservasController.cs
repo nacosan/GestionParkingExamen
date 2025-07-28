@@ -66,7 +66,7 @@ namespace GestionParkingExamen.Controllers
             {
                 _context.Add(reservas);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Confirmacion));
             }
             ViewData["UsuarioId"] = new SelectList(_context.Users, "Id", "Email", reservas.UsuarioId);
             return View(reservas);
@@ -189,7 +189,10 @@ namespace GestionParkingExamen.Controllers
                 : null;
         }
 
-     
+        public async Task<IActionResult> Confirmacion()
+        { 
+            return View("Confirmacion" );
+        }
     }
 }
 
